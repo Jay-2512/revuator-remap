@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='./stylesheets/search.css') }}"
+/>
+{% endblock %} {% block content %}
+<main class="search-main">
+  <div class="header-container">
+    <h1 class="header">Search</h1>
+  </div>
+
+  <div class="form-container">
+    <p class="msg">Enter product name</p>
+    <form action="/dashboard" method="post" class="search-form">
+      <input
+        type="text"
+        name="search"
+        id="search"
+        class="search-input"
+        placeholder="Search"
+      />
+      <button type="submit" class="border-button-primary search-btn">
+        Search
+      </button>
+    </form>
+
+    <p class="warn">Please enter a valid product name</p>
+  </div>
+
+  <svg
+    class="search-svg__1"
+    width="378"
+    height="312"
+    viewBox="0 0 378 312"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M86.5702 3.575C182.589 -8.50557 292.709 7.8858 349.95 85.9177C405.729 161.955 363.899 262.536 344.183 354.755C323.901 449.624 325.16 567.799 237.874 610.141C150.485 652.533 51.1755 590.705 -28.902 535.737C-92.3689 492.17 -128.716 424.012 -143.371 348.439C-157.313 276.543 -145.657 204.094 -105.029 143.161C-58.9102 73.9917 4.08609 13.9527 86.5702 3.575Z"
+      fill="#4C59C9"
+    />
+  </svg>
+
+  <svg
+    class="search-svg__2"
+    width="368"
+    height="338"
+    viewBox="0 0 368 338"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M227.894 -85.0273C273.239 -82.9163 320.164 -80.1071 356.901 -54.3478C393.646 -28.5832 412.277 13.1813 427.085 54.6399C442.148 96.8162 456.311 141.921 442.17 184.395C428.01 226.928 388.766 255 351.548 281.531C314.048 308.264 273.959 343.997 227.894 337.144C182.349 330.368 166.367 274.666 129.133 248.441C92.0083 222.293 33.8745 223.891 11.8224 184.958C-10.9283 144.792 3.79956 94.9499 17.3415 51.0741C31.182 6.23112 49.2615 -40.7691 89.5243 -66.7949C129.181 -92.4289 180.231 -87.2461 227.894 -85.0273Z"
+      fill="#4C59C9"
+    />
+  </svg>
+</main>
+{% endblock %}

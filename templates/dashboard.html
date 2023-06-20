@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='./stylesheets/dashboard.css') }}"
+/>
+{% endblock %} {% block content %}
+<main class="dash-main">
+  <div class="header-container">
+    <h1 class="header">Dashboard</h1>
+  </div>
+
+  <div class="dash-container">
+    <div class="dash-container__left">
+      <div class="img-container">
+        <img
+          src="https://rukminim1.flixcart.com/image/416/416/l0igvww0/mobile/r/q/m/-original-imagca5ajerqpfjy.jpeg?q=70"
+          alt="PROD IMAGE"
+          srcset=""
+        />
+      </div>
+      <p class="price-tag">100000</p>
+      <p class="price-tag__info">Lowest price from: {{params.lowPrice}}</p>
+    </div>
+    <div class="dash-container__right"></div>
+  </div>
+
+  <svg
+    class="dash-svg__1"
+    width="355"
+    height="360"
+    viewBox="0 0 355 360"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M103.665 -99.5026C156.241 -90.7345 203.993 -70.3306 242.686 -33.6693C282.683 4.22841 307.343 51.6936 319.867 105.351C337.493 180.873 384.582 276.705 327.338 329.025C269.739 381.669 181.628 299.675 103.665 302.954C17.9507 306.56 -64.2429 389.575 -139.652 348.669C-222.418 303.772 -271.003 198.934 -260.609 105.351C-250.732 16.4299 -168.989 -45.4643 -91.0056 -89.3191C-32.1274 -122.43 37.0352 -110.614 103.665 -99.5026Z"
+      fill="#4C59C9"
+    />
+  </svg>
+  <svg
+    class="dash-svg__2"
+    width="381"
+    height="352"
+    viewBox="0 0 381 352"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M319.578 8.5305C409.581 -8.63097 523.458 -5.21636 576.941 69.1787C629.321 142.04 559.017 237.459 548.198 326.541C539.699 396.516 569.629 476.944 521.197 528.16C472.252 579.919 390.8 566.823 319.578 568.305C245.942 569.838 168.077 581.232 109.388 536.731C44.054 487.192 -6.74374 408.192 0.731094 326.541C7.88715 248.372 89.0674 207.039 144.645 151.607C200.092 96.3057 242.653 23.1984 319.578 8.5305Z"
+      fill="#4C59C9"
+    />
+  </svg>
+</main>
+{% endblock %}
