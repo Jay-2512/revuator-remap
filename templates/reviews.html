@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='./stylesheets/reviews.css') }}"
+/>
+{% endblock %} {% block content %}
+<main class="review-main">
+  <div class="header-container">
+    <h1 class="header">Reviews</h1>
+  </div>
+
+  <div class="review-container">
+    {% for i in range(review_list|count) %}
+    <div class="review-container__child">
+      <p>{{review_list[i]}}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <svg
+    class="review-svg__1"
+    width="316"
+    height="385"
+    viewBox="0 0 316 385"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M-47.8228 -119.08C14.0483 -107.575 68.3454 -86.5703 120.964 -52.0494C194.74 -3.64757 294.761 30.1263 311.621 116.737C329.704 209.631 282.931 317.151 202.563 367.123C128.457 413.2 38.6212 352.161 -47.8228 340.234C-113.958 331.109 -191.164 354.478 -237.493 306.408C-283.52 258.65 -254.728 182.518 -263.219 116.737C-274.211 31.5829 -351.623 -65.762 -293.717 -129.157C-236.204 -192.124 -131.665 -134.67 -47.8228 -119.08Z"
+      fill="#4C59C9"
+    />
+  </svg>
+
+  <svg
+    class="review-svg__2"
+    width="456"
+    height="416"
+    viewBox="0 0 456 416"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M269.462 68.7993C358.138 67.4021 454.536 -41.7933 520.254 17.7588C585.122 76.5406 498.974 181.483 489.894 268.551C482.557 338.905 524.864 423.996 472.885 471.973C421.087 519.784 339.947 472.903 269.462 472.013C200.712 471.146 122.445 512.642 71.1105 466.902C19.2097 420.657 48.1132 337.712 41.1151 268.551C32.6224 184.617 -37.0445 81.084 26.4514 25.5397C90.8285 -30.7754 183.94 70.1469 269.462 68.7993Z"
+      fill="#4C59C9"
+    />
+  </svg>
+</main>
+{% endblock %}

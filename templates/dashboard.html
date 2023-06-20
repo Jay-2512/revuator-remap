@@ -12,16 +12,26 @@
   <div class="dash-container">
     <div class="dash-container__left">
       <div class="img-container">
-        <img
-          src="https://rukminim1.flixcart.com/image/416/416/l0igvww0/mobile/r/q/m/-original-imagca5ajerqpfjy.jpeg?q=70"
-          alt="PROD IMAGE"
-          srcset=""
-        />
+        <img src="{{params.productImage}}" alt="PROD IMAGE" srcset="" />
       </div>
-      <p class="price-tag">100000</p>
-      <p class="price-tag__info">Lowest price from: {{params.lowPrice}}</p>
+      <p class="price-tag">{{params.productPrice}}</p>
+      <p class="price-tag__info">Lowest price from: {{params.productSite}}</p>
     </div>
-    <div class="dash-container__right"></div>
+    <div class="dash-container__right">
+      <h1>{{params.productName}}</h1>
+      <div class="dash-button-container">
+        <a
+          href="{{url_for('reviews')}}"
+          class="border-button-primary dash-button"
+          >See Reviews</a
+        >
+        <a
+          href="{{url_for('analysis')}}"
+          class="border-button-primary dash-button"
+          >Analyze Reviews</a
+        >
+      </div>
+    </div>
   </div>
 
   <svg

@@ -1,0 +1,60 @@
+{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='./stylesheets/analysis.css') }}"
+/>
+{% endblock %} {% block content %}
+
+<main class="analysis-main">
+  <div class="header-container">
+    <h1 class="header">Dashboard</h1>
+  </div>
+
+  <div class="analysis-container">
+    <div class="analysis-container__left">
+      <div class="img-container">
+        <img src="{{img_path}}" alt="IMAGE" />
+      </div>
+      <p>{{sentiment}}</p>
+    </div>
+    <div class="analysis-container__right">
+      <div class="cloud-container">
+        <img src="static/output/wordcloud.png" alt="CLOUD" />
+      </div>
+    </div>
+  </div>
+
+  <svg
+    class="analysis-svg__1"
+    width="434"
+    height="314"
+    viewBox="0 0 434 314"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M187.277 21.2791C261.607 27.4395 347.631 8.27093 398.461 62.853C448.66 116.757 433.991 201.255 422.658 274.037C413.365 333.715 387.614 389.246 341.553 428.313C299.057 464.356 242.976 472.024 187.277 473.677C129.222 475.4 74.434 465.777 23.5623 437.752C-54.5717 394.707 -156.998 361.386 -175.107 274.037C-194.366 181.143 -139.887 78.9566 -62.0757 24.6841C8.80124 -24.7516 101.158 14.1416 187.277 21.2791Z"
+      fill="#4C59C9"
+    />
+  </svg>
+
+  <svg
+    class="analysis-svg__2"
+    width="435"
+    height="396"
+    viewBox="0 0 435 396"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M306.996 -141.239C366.655 -123.818 394.723 -63.0991 445.63 -27.4438C519.86 24.5482 644.985 23.3779 667.397 111.19C690.177 200.441 613.687 288.72 540.647 344.842C475.353 395.011 387.828 403.806 306.996 388.112C239.748 375.056 199.069 315.96 149.321 268.865C97.1128 219.44 30.7339 181.221 14.4789 111.19C-5.58347 24.7565 -13.1766 -83.8343 54.0001 -141.805C120.372 -199.081 222.841 -165.813 306.996 -141.239Z"
+      fill="#4C59C9"
+    />
+  </svg>
+</main>
+
+{% endblock %}
