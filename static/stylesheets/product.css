@@ -104,3 +104,15 @@
   margin-top: 20px;
   border: 1px solid #5e6eff;
 }
+.logo{
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+}
+.logo img{
+  object-fit: contain;
+  aspect-ratio: 0.4;
+  height: 100px;
+  width: 100px;
+}
