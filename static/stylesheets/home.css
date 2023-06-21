@@ -28,12 +28,8 @@
   margin-left: 150px;
 }
 
-.container-left h1 {
-  font-size: 75px;
-  color: #fff;
-  font-weight: lighter;
-  margin: 0px;
-  padding: 0px;
+.container-left img {
+ width: 150px; 
 }
 
 .container-left p {
