@@ -82,9 +82,10 @@
 }
 
 .img-container img {
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
+  /* height: 100%;
+  width: 100%; */
+  aspect-ratio: 1.5;
+  object-fit: contain; 
 }
 
 .price-tag {
@@ -120,4 +121,16 @@
   width: 100%;
   text-align: center;
   font-size: 16px;
+}
+.logo{
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+}
+.logo img{
+  object-fit: contain;
+  aspect-ratio: 0.4;
+  height: 100px;
+  width: 100px;
 }

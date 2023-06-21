@@ -67,3 +67,16 @@
 .review-container__child:nth-child(even) {
   background-color: #4c58c95d;
 }
+.logo{
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+}
+.logo img{
+  object-fit: contain;
+  aspect-ratio: 0.4;
+  height: 100px;
+  width: 100px;
+}
+
