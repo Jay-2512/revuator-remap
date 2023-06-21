@@ -1,33 +1,33 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock %} {% block styles %}
 <link
   rel="stylesheet"
-  href="{{ url_for('static', filename='./stylesheets/search.css') }}"
+  href="{{ url_for('static', filename='./stylesheets/product.css') }}"
 />
 {% endblock %} {% block content %}
 <main class="search-main">
   <div class="header-container">
-    <h1 class="header">Search</h1>
+    <h1 class="header">Search by Product</h1>
   </div>
 
   <div class="form-container">
-    <p class="msg">Enter product name</p>
+    <p class="msg">Enter product URL</p>
     <form action="/dashboard" method="post" class="search-form">
       <input
-        type="text"
+        type="url"
         name="search"
         id="search"
         class="search-input"
         placeholder="Search"
+        pattern="https://.*"
       />
       <button type="submit" class="border-button-primary search-btn">
         Search
       </button>
     </form>
-    <a href="{{url_for('search_product')}}" class="product-hyperlink"
-      >Search for a specific product</a
+    <a href="{{url_for('search')}}" class="product-hyperlink"
+      >Search by product name</a
     >
-
-    <p class="warn">Please enter a valid product name</p>
+    <p class="warn">Please enter a valid product URL</p>
   </div>
 
   <svg
@@ -61,8 +61,5 @@
       fill="#4C59C9"
     />
   </svg>
-  <div class="logo">
-    <img src="../static/images/logo 1.png" alt="">
-  </div>
 </main>
 {% endblock %}
