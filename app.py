@@ -3,6 +3,7 @@ import time
 
 from itertools import chain
 from flask import Flask, render_template, request, flash
+from colorama import Fore, Back, Style
 from revlib import GetURL as GU
 from revlib import GetAMZ as GA
 from revlib import GetFLIP as GF
@@ -15,6 +16,8 @@ url = ""
 main_review_list = []
 amzn_url = ""
 flip_url = ""
+site = ""
+is_url = False
 
 # initialize app
 app = Flask(__name__)
@@ -52,11 +55,10 @@ def dashboard():
     global amzn_url
     global flip_url
     global main_review_list
+    global site
+    global is_url
 
     is_url, site = RU.check_url(product_name)
-
-    print("LOG: is_url = ", is_url)
-    print("LOG: site = ", site)
 
     if not is_url:
         # get flipkart url
@@ -66,13 +68,14 @@ def dashboard():
 
         # check for errors
         if flip_error:
-            print("LOG: Flipkart Error")
+            print(
+                f"{Fore.GREEN}LOG:{Style.RESET_ALL} {Back.BLUE}[FLIP]{Style.RESET_ALL} Flipkart Error")
             return render_template('search.html')
         elif amzn_error:
-            print("LOG: Amazon Error")
+            print(
+                f"{Fore.GREEN}LOG:{Style.RESET_ALL} {Back.YELLOW}[AMZN]{Style.RESET_ALL} Amazon Error")
             return render_template('search.html')
         else:
-            print("URL Fetching Complete")
             # get amazon details
             amzn_details = GA.get_basic_info(amzn_url)
             time.sleep(1)
@@ -145,22 +148,56 @@ def reviews():
 
 @app.route("/analysis")
 def analysis():
-    amz_proc_reviews = GR.get_amz_proc_reviews(amzn_url)
-    flip_proc_reviews = GR.get_flip_proc_reviews(flip_url)
+    global site
+    global is_url
+    global url
 
-    proc_list = amz_proc_reviews + flip_proc_reviews
-    sentiment_score = RA.find_sentiment(proc_list)
-    RA.generate_word_cloud(proc_list, sentiment_score)
+    if not is_url:
+        amz_proc_reviews = GR.get_amz_proc_reviews(amzn_url)
+        flip_proc_reviews = GR.get_flip_proc_reviews(flip_url)
 
-    if sentiment_score == 1:
-        sentiment = "Positive"
-        img_path = "static/images/positive.jpg"
-    elif sentiment_score == 0:
-        sentiment = "Neutral"
-        img_path = "static/images/neutral.jpg"
+        proc_list = amz_proc_reviews + flip_proc_reviews
+        sentiment_score = RA.find_sentiment(proc_list)
+        RA.generate_word_cloud(proc_list, sentiment_score)
+
+        if sentiment_score == 1:
+            sentiment = "Positive"
+            img_path = "static/images/positive.jpg"
+        elif sentiment_score == 0:
+            sentiment = "Neutral"
+            img_path = "static/images/neutral.jpg"
+        else:
+            sentiment = "Negative"
+            img_path = "static/images/negative.jpg"
     else:
-        sentiment = "Negative"
-        img_path = "static/images/negative.jpg"
+        if site == "amazon":
+            proc_list = GR.get_amz_proc_reviews(url)
+            sentiment_score = RA.find_sentiment(proc_list)
+            RA.generate_word_cloud(proc_list, sentiment_score)
+            if sentiment_score == 1:
+                sentiment = "Positive"
+                img_path = "static/images/positive.jpg"
+            elif sentiment_score == 0:
+                sentiment = "Neutral"
+                img_path = "static/images/neutral.jpg"
+            else:
+                sentiment = "Negative"
+                img_path = "static/images/negative.jpg"
+        elif site == "flipkart":
+            proc_list = GR.get_flip_proc_reviews(url)
+            sentiment_score = RA.find_sentiment(proc_list)
+            RA.generate_word_cloud(proc_list, sentiment_score)
+            if sentiment_score == 1:
+                sentiment = "Positive"
+                img_path = "static/images/positive.jpg"
+            elif sentiment_score == 0:
+                sentiment = "Neutral"
+                img_path = "static/images/neutral.jpg"
+            else:
+                sentiment = "Negative"
+                img_path = "static/images/negative.jpg"
+        else:
+            return render_template('search.html')
 
     return render_template('analysis.html', sentiment=sentiment, img_path=img_path)
 
