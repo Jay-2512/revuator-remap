@@ -27,9 +27,12 @@
   top: 35%;
   margin-left: 150px;
 }
-
-.container-left img {
- width: 150px; 
+.container-left h1 {
+  font-size: 75px;
+  color: #fff;
+  font-weight: lighter;
+  margin: 0px;
+  padding: 0px;
 }
 
 .container-left p {
@@ -117,4 +120,16 @@
   top: 180px;
   font-size: 20px;
   margin-left: 10px;
+}
+.logo{
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+}
+.logo img{
+  object-fit: contain;
+  aspect-ratio: 0.4;
+  height: 100px;
+  width: 100px;
 }
