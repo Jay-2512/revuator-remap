@@ -95,13 +95,13 @@
   background-color: transparent;
 }
 
-.logo{
+.logo {
   position: fixed;
   right: 20px;
   bottom: 20px;
   z-index: 1000;
 }
-.logo img{
+.logo img {
   object-fit: contain;
   aspect-ratio: 0.4;
   height: 100px;
@@ -115,4 +115,46 @@
   border-radius: 1rem;
   margin-top: 20px;
   border: 1px solid #5e6eff;
+}
+
+@media only screen and (max-width: 600px) {
+  .search-svg__1 {
+    height: 300px;
+    width: 300px;
+  }
+
+  .search-svg__2 {
+    height: 300px;
+    width: 300px;
+  }
+
+  .form-container {
+    height: 400px;
+    width: 600px;
+    margin-inline: 10px;
+    background-color: #ffffff11;
+    backdrop-filter: blur(5px);
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 3;
+  }
+
+  .form-container form {
+    width: 90%;
+    flex-direction: column;
+    height: 150px;
+    margin-top: 20px;
+  }
+
+  .form-container form input {
+    height: 50px;
+    width: 100%;
+  }
+
+  .search-btn {
+    width: 60%;
+  }
 }

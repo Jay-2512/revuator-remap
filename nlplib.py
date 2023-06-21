@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.stem.wordnet import WordNetLemmatizer
+from colorama import Fore, Back, Style
 from nltk.corpus import stopwords
 
 
@@ -19,36 +20,51 @@ class ReviewAnalyzer:
         nltk.download('omw-1.4')
 
     def find_sentiment(review_list):
+        # TF-IDF vectorizer
         vectorizer = TfidfVectorizer()
         tfidf_matrix = vectorizer.fit_transform(review_list)
+
+        sia = SentimentIntensityAnalyzer()
 
         sentiment_scores = []
         for i in range(len(review_list)):
             review = review_list[i]
-            review = re.sub("[^A-Za-z]+", " ", review).lower()
-            review = re.sub("[0-9]+", " ", review)
-
-            rev_tkns = review.split()
-            wordnet = WordNetLemmatizer()
-            rev_tkns = [wordnet.lemmatize(word) for word in rev_tkns]
-            rev_str = " ".join(rev_tkns)
 
             # Get TF-IDF representation of the current review
             review_tfidf = tfidf_matrix[i]
 
             # Calculate sentiment score based on TF-IDF weights
-            sentiment_score = np.sum(review_tfidf)
-            sentiment_scores.append(sentiment_score)
+            sentiment = sia.polarity_scores(review)
+            print(sentiment)
+            sentiment_score = sentiment['compound']
+            print(sentiment_score)
+            weighted_sentiment_score = sentiment_score * np.sum(review_tfidf)
+            print(weighted_sentiment_score)
+            sentiment_scores.append(weighted_sentiment_score)
 
         # Calculate the average sentiment score
-        average_sentiment_score = np.mean(sentiment_scores)
+        average_sentiment_score = sum(sentiment_scores) / len(sentiment_scores)
 
-        if average_sentiment_score > 0:
-            return 1
-        elif average_sentiment_score < 0:
-            return -1
+        # Set a threshold for classifying reviews as positive or negative
+        threshold = 0.1
+
+        # Calculate the percentage of positive and negative reviews
+        positive_reviews_percentage = len(
+            [score for score in sentiment_scores if score > threshold]) / len(sentiment_scores) * 100
+        negative_reviews_percentage = len(
+            [score for score in sentiment_scores if score < -threshold]) / len(sentiment_scores) * 100
+
+        print(
+            f"LOG: {Back.WHITE}[SYSTEM]{Style.RESET_ALL} Positive Sentiment Score: {positive_reviews_percentage}")
+        print(
+            f"LOG: {Back.WHITE}[SYSTEM]{Style.RESET_ALL} Negative Sentiment Score: {negative_reviews_percentage}")
+
+        if average_sentiment_score > threshold:
+            return [1, positive_reviews_percentage, negative_reviews_percentage]
+        elif average_sentiment_score < -threshold:
+            return [-1, positive_reviews_percentage, negative_reviews_percentage]
         else:
-            return 0
+            return [0, positive_reviews_percentage, negative_reviews_percentage]
 
     def generate_word_cloud(review_list, sentiment):
         sentiment_words = []

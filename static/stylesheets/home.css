@@ -121,15 +121,54 @@
   font-size: 20px;
   margin-left: 10px;
 }
-.logo{
+.logo {
   position: fixed;
   right: 20px;
   bottom: 20px;
   z-index: 1000;
 }
-.logo img{
+.logo img {
   object-fit: contain;
   aspect-ratio: 0.4;
   height: 100px;
   width: 100px;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 600px) {
+  .home-main {
+    height: 100vh;
+    width: 100vw;
+    background-color: #070920;
+    z-index: 1;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .home-svg__1 {
+    height: 300px;
+    width: 300px;
+  }
+
+  .home-svg__2 {
+    height: 300px;
+    width: 300px;
+  }
+
+  .container-left {
+    height: 300px;
+    width: 300px;
+    margin-left: 0px;
+  }
+
+  .container-left h1 {
+    font-size: 50px;
+  }
+
+  .card {
+    display: none;
+  }
 }

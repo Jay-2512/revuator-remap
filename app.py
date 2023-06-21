@@ -1,6 +1,5 @@
 # import statements
 import time
-
 from itertools import chain
 from flask import Flask, render_template, request, flash
 from colorama import Fore, Back, Style
@@ -173,7 +172,8 @@ def analysis():
         flip_proc_reviews = GR.get_flip_proc_reviews(flip_url)
 
         proc_list = amz_proc_reviews + flip_proc_reviews
-        sentiment_score = RA.find_sentiment(proc_list)
+        sentiment_score, positive_percentage, negative_percentage = RA.find_sentiment(
+            proc_list)
         RA.generate_word_cloud(proc_list, sentiment_score)
 
         if sentiment_score == 1:
@@ -188,7 +188,10 @@ def analysis():
     else:
         if site == "amazon":
             proc_list = GR.get_amz_proc_reviews(url)
-            sentiment_score = RA.find_sentiment(proc_list)
+            # review_list = ["Product does not work", "Not happy with the quality.",
+            #                "Bad quality.", "Very Bad Product"]
+            sentiment_score, positive_percentage, negative_percentage = RA.find_sentiment(
+                proc_list)
             RA.generate_word_cloud(proc_list, sentiment_score)
             if sentiment_score == 1:
                 sentiment = "Positive"
@@ -201,7 +204,8 @@ def analysis():
                 img_path = "static/images/negative.jpg"
         elif site == "flipkart":
             proc_list = GR.get_flip_proc_reviews(url)
-            sentiment_score = RA.find_sentiment(proc_list)
+            sentiment_score, positive_percentage, negative_percentage = RA.find_sentiment(
+                proc_list)
             RA.generate_word_cloud(proc_list, sentiment_score)
             if sentiment_score == 1:
                 sentiment = "Positive"
@@ -218,7 +222,8 @@ def analysis():
             if proc_list == []:
                 return render_template('search.html')
             else:
-                sentiment_score = RA.find_sentiment(proc_list)
+                sentiment_score, positive_percentage, negative_percentage = RA.find_sentiment(
+                    proc_list)
                 RA.generate_word_cloud(proc_list, sentiment_score)
                 if sentiment_score == 1:
                     sentiment = "Positive"
@@ -230,7 +235,7 @@ def analysis():
                     sentiment = "Negative"
                     img_path = "static/images/negative.jpg"
 
-    return render_template('analysis.html', sentiment=sentiment, img_path=img_path)
+    return render_template('analysis.html', sentiment=sentiment, img_path=img_path, pos_percentage=positive_percentage, neg_percentage=negative_percentage)
 
 
 # run app

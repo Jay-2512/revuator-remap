@@ -85,7 +85,7 @@
   /* height: 100%;
   width: 100%; */
   aspect-ratio: 1.5;
-  object-fit: contain; 
+  object-fit: contain;
 }
 
 .price-tag {
@@ -122,15 +122,50 @@
   text-align: center;
   font-size: 16px;
 }
-.logo{
+.logo {
   position: fixed;
   right: 20px;
   bottom: 20px;
   z-index: 1000;
 }
-.logo img{
+.logo img {
   object-fit: contain;
   aspect-ratio: 0.4;
   height: 100px;
   width: 100px;
+}
+
+@media only screen and (max-width: 600px) {
+  .dash-svg__1 {
+    height: 300px;
+    width: 300px;
+  }
+
+  .dash-svg__2 {
+    height: 300px;
+    width: 300px;
+  }
+
+  .dash-container {
+    height: 700px;
+    width: 750px;
+    flex-direction: column;
+    z-index: 4;
+  }
+
+  .img-container {
+    height: 160px;
+    width: 160px;
+  }
+
+  .dash-container__left {
+    width: 100%;
+  }
+
+  .dash-container__right {
+    width: 100%;
+  }
+  .dash-container__right h1 {
+    text-align: center;
+  }
 }

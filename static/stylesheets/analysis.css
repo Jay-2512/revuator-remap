@@ -104,15 +104,45 @@
   object-fit: cover;
   border-radius: 1rem;
 }
-.logo{
+.logo {
   position: fixed;
   right: 20px;
   bottom: 20px;
   z-index: 1000;
 }
-.logo img{
+.logo img {
   object-fit: contain;
   aspect-ratio: 0.4;
   height: 100px;
   width: 100px;
+}
+
+.rev-per {
+  background-color: transparent !important;
+  padding-block: 10px;
+  margin: 0.5rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .analysis-svg__1 {
+    height: 300px;
+    width: 300px;
+  }
+
+  .analysis-svg__2 {
+    height: 300px;
+    width: 300px;
+  }
+
+  .analysis-container {
+    height: 650px;
+    width: 800px;
+    flex-direction: column;
+  }
+  .analysis-container__left {
+    width: 100%;
+  }
+  .analysis-container__right {
+    width: 100%;
+  }
 }
