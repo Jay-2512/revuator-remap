@@ -7,6 +7,7 @@ from revlib import GetURL as GU
 from revlib import GetAMZ as GA
 from revlib import GetFLIP as GF
 from revlib import GetREV as GR
+from revlib import RevUtils as RU
 from nlplib import ReviewAnalyzer as RA
 
 # global variables
@@ -33,6 +34,13 @@ def index():
 def search():
     return render_template('search.html')
 
+# search individual sites route
+
+
+@app.route("/search/product")
+def search_product():
+    return render_template('product.html')
+
 # dashboard route
 
 
@@ -43,48 +51,82 @@ def dashboard():
     # global variables
     global amzn_url
     global flip_url
+    global main_review_list
 
-    # get flipkart url
-    flip_url, flip_error = GU.get_FLIP(product_name)
-    # get amazon url
-    amzn_url, amzn_error = GU.get_AMZN(product_name)
+    is_url, site = RU.check_url(product_name)
 
-    # check for errors
-    if flip_error:
-        print("LOG: Flipkart Error")
-        return render_template('search.html')
-    elif amzn_error:
-        print("LOG: Amazon Error")
-        return render_template('search.html')
-    else:
-        print("URL Fetching Complete")
-        # get amazon details
-        amzn_details = GA.get_basic_info(amzn_url)
-        time.sleep(1)
-        # get flipkart details
-        flip_details = GF.get_basic_info(flip_url)
+    print("LOG: is_url = ", is_url)
+    print("LOG: site = ", site)
 
-        # get the lowest price
-        if (amzn_details[1] < flip_details[1]):
-            lowest_price = amzn_details[1]
-            low_price_site = "amazon.in"
+    if not is_url:
+        # get flipkart url
+        flip_url, flip_error = GU.get_FLIP(product_name)
+        # get amazon url
+        amzn_url, amzn_error = GU.get_AMZN(product_name)
+
+        # check for errors
+        if flip_error:
+            print("LOG: Flipkart Error")
+            return render_template('search.html')
+        elif amzn_error:
+            print("LOG: Amazon Error")
+            return render_template('search.html')
         else:
-            lowest_price = flip_details[1]
-            low_price_site = "flipkart.com"
+            print("URL Fetching Complete")
+            # get amazon details
+            amzn_details = GA.get_basic_info(amzn_url)
+            time.sleep(1)
+            # get flipkart details
+            flip_details = GF.get_basic_info(flip_url)
 
-        # get main reviews
-        global main_review_list
+            # get the lowest price
+            if (amzn_details[1] < flip_details[1]):
+                lowest_price = amzn_details[1]
+                low_price_site = "amazon.in"
+            else:
+                lowest_price = flip_details[1]
+                low_price_site = "flipkart.com"
 
-        main_review_list.append(GR.get_amz_main_reviews(amzn_url))
-        main_review_list.append(GR.get_flip_main_reviews(flip_url))
+            main_review_list.append(GR.get_amz_main_reviews(amzn_url))
+            main_review_list.append(GR.get_flip_main_reviews(flip_url))
 
-        # JSON data to be sent to the dashboard
-        product_data = {
-            "productName": amzn_details[0],
-            "productPrice": lowest_price,
-            "productSite": low_price_site,
-            "productImage": flip_details[2]
-        }
+            # JSON data to be sent to the dashboard
+            product_data = {
+                "productName": amzn_details[0],
+                "productPrice": lowest_price,
+                "productSite": low_price_site,
+                "productImage": flip_details[2]
+            }
+    else:
+        global url
+        if site == "amazon":
+            url = product_name
+            # get amazon reviews
+            amzn_details = GA.get_basic_info(url)
+
+            main_review_list.append(GR.get_amz_main_reviews(url))
+
+            # JSON data to be sent to the dashboard
+            product_data = {
+                "productName": amzn_details[0],
+                "productPrice": amzn_details[1],
+                "productSite": "amazon.in",
+                "productImage": amzn_details[2]
+            }
+        elif site == "flipkart":
+            url = product_name
+            # get flipkart reviews
+            flip_details = GF.get_basic_info(url)
+
+            main_review_list.append(GR.get_flip_main_reviews(url))
+
+            # JSON data to be sent to the dashboard
+            product_data = {
+                "productName": flip_details[0],
+                "productPrice": flip_details[1],
+                "productSite": "flipkart.com",
+                "productImage": flip_details[2]
+            }
 
     return render_template('dashboard.html', params=product_data)
 

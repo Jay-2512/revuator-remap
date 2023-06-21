@@ -13,6 +13,28 @@ accpt_lang = os.getenv("ACCEPT_LANGUAGE")
 HEADERS = ({'User-Agent': user_agent, 'Accept-Language': accpt_lang})
 
 
+class RevUtils:
+    def check_url(url):
+        is_valid = False
+        site = ""
+        # Check if input is url or not and check if it contains amazon or flipkart
+        if url.startswith("https://") or url.startswith("http://"):
+            is_valid = True
+            url_list = url.split("/")
+            # check if www.amazon.in in url_list
+            if "www.amazon.in" in url_list:
+                site = "amazon"
+            # check if www.flipkart.com in url_list
+            elif "www.flipkart.com" in url_list:
+                site = "flipkart"
+            else:
+                is_valid = False
+        else:
+            is_valid = False
+
+        return [is_valid, site]
+
+
 class GetURL:
     def get_FLIP(product_name):
 
@@ -66,12 +88,11 @@ class GetURL:
 
 
 class GetAMZ:
-
     def get_basic_info(amzn_url):
         try:
             r = requests.get(amzn_url, headers=HEADERS)
             if (r.status_code == 200):
-                print("LOG: [FLIP] Connection Successful")
+                print("LOG: [AMZN] Connection Successful")
                 html_data = r.text
                 soup = bs(html_data, 'html.parser')
                 # get product name
@@ -90,14 +111,13 @@ class GetAMZ:
                     product_price = "Not Available"
                 # get product image
                 try:
-                    img_element = soup.find("div", class_="imgTagWrapper")
-                    product_image = img_element.find(
-                        "img", class_="a-dynamic-image a-stretch-vertical").get('src')
+                    image_element = soup.find('div', id='imgTagWrapperId')
+                    product_image = image_element.find('img')['src']
                 except Exception as e:
                     print("LOG: [AMZN] Error in getting product image")
                     product_image = "Not Available"
 
-                    return [product_name, product_price, product_image]
+                return [product_name, product_price, product_image]
         except Exception as e:
             print("LOG: [AMZN] Error in getting basic info")
             product_name = "Not Available"
