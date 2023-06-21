@@ -8,6 +8,7 @@ from revlib import GetURL as GU
 from revlib import GetAMZ as GA
 from revlib import GetFLIP as GF
 from revlib import GetREV as GR
+from revlib import GetSNAP as GS
 from revlib import RevUtils as RU
 from nlplib import ReviewAnalyzer as RA
 
@@ -130,6 +131,21 @@ def dashboard():
                 "productSite": "flipkart.com",
                 "productImage": flip_details[2]
             }
+        elif site == "snapdeal":
+            url = product_name
+            # get snapdeal reviews
+            snap_details = GS.get_basic_info(url)
+
+            main_review_list.append(GR.get_snap_main_reviews(url))
+            print(main_review_list)
+
+            # JSON data to be sent to the dashboard
+            product_data = {
+                "productName": snap_details[0],
+                "productPrice": snap_details[1],
+                "productSite": "snapdeal.com",
+                "productImage": snap_details[2]
+            }
 
     return render_template('dashboard.html', params=product_data)
 
@@ -196,8 +212,23 @@ def analysis():
             else:
                 sentiment = "Negative"
                 img_path = "static/images/negative.jpg"
-        else:
-            return render_template('search.html')
+        elif site == "snapdeal":
+            proc_list = GR.get_snap_proc_reviews(url)
+            print(proc_list)
+            if proc_list == []:
+                return render_template('search.html')
+            else:
+                sentiment_score = RA.find_sentiment(proc_list)
+                RA.generate_word_cloud(proc_list, sentiment_score)
+                if sentiment_score == 1:
+                    sentiment = "Positive"
+                    img_path = "static/images/positive.jpg"
+                elif sentiment_score == 0:
+                    sentiment = "Neutral"
+                    img_path = "static/images/neutral.jpg"
+                else:
+                    sentiment = "Negative"
+                    img_path = "static/images/negative.jpg"
 
     return render_template('analysis.html', sentiment=sentiment, img_path=img_path)
 
