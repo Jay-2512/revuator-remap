@@ -104,3 +104,15 @@
   object-fit: cover;
   border-radius: 1rem;
 }
+.logo{
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+}
+.logo img{
+  object-fit: contain;
+  aspect-ratio: 0.4;
+  height: 100px;
+  width: 100px;
+}
